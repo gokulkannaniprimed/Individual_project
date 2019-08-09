@@ -40,7 +40,14 @@ INSTALLED_APPS = [
     'plans',
     'rest_framework',
     'corsheaders',
+    'login',
+    'registration',
+    'newconnection',
     'users',
+    'offers',
+    'transaction_history',
+    'wallet',
+    'card'
 
 ]
 
