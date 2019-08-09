@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Connection,Porting
 from rest_framework.renderers import JSONRenderer
 from django.core import serializers
+from django.core.mail import send_mail
 from django.forms.models import model_to_dict
 from .serializers import ConnectionSerializer,PortingSerializer
 from django.views.decorators.csrf import csrf_exempt
@@ -28,7 +29,14 @@ def conn(request):
     conn_data = json.loads(request.body)
     c=Connection(first_name=conn_data["first_name"],last_name=conn_data["last_name"],username=conn_data["last_name"],city=conn_data["city"],status=conn_data["status"],circle=conn_data["circle"])
     c.save()
-  
+    send_mail(
+    'Thank you for contacting voizfonica',
+    'Hi' + conn_data["first_name"] + ', \n\nWe have received your connection request. Soon you will recieve a mail ',
+    'admin@voizfonica.com',
+    ['skandagurunathan.iprimed@gmail.com'],
+    fail_silently=True,
+)
+
 
     
     return JSONResponse("")

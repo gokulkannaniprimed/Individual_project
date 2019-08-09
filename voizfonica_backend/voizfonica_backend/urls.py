@@ -24,7 +24,8 @@ urlpatterns = [
     path('login/', include("login.urls")),
     path('users/', include("users.urls")),
     path('offers/', include("offers.urls")),
-    path('transaction_history/', include("transaction_history.urls"))
+    path('transaction_history/', include("transaction_history.urls")),
+    path('support/', include("chatsupport.urls"))
 
     
 
