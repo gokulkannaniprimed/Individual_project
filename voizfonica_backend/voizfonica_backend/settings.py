@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'offers',
     'transaction_history',
     'wallet',
-    'card'
+    'card',
+    'chatsupport'
 
 ]
 
