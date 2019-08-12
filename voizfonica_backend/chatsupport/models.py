@@ -1,8 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-#from transactions.model import Transactions
 
-# Create your models here.
+sender_type_choices=(
+     ('user','USER'),
+     ('bot','BOT'),
+)
+
+message_type_choices=(
+     ('information','INFORMATION'),
+     ('option','OPTION'),
+     ('null','NULL')
+)
+
 prob_choices = (
     ('info','INFO'),
     ('option','OPTION'),
@@ -13,11 +22,18 @@ tick_choices = (
     ('Closed','CLOSED'),
 )
 
-# class Chat(models.Model):
-#      status=models.BooleanField()
+class Chat(models.Model):
+     user_id=models.CharField(max_length=100)
+     ip_address=models.CharField(max_length=100)
+     start_time=models.CharField(max_length=100)
 
-#      def __str__(self):
-#           return str(self.id)
+class Messages(models.Model):
+     chat_id=models.CharField(max_length=100)
+     user_id=models.CharField(max_length=100)
+     sender_type=models.CharField(max_length=50,choices=sender_type_choices,default='bot')
+     message_content=models.TextField()
+     message_type=models.CharField(max_length=50,choices=message_type_choices,default='null')
+     time_stamp=models.CharField(max_length=50)
 
 class Problems(models.Model):
      problems=models.CharField(max_length=100)
@@ -44,16 +60,30 @@ class Ticket(models.Model):
      def __str__(self):
           return str(self.ticket_type)
 
-# class Messages(models.Model):
-#      chat_id=models.ForeignKey(Chat,on_delete=models.CASCADE)
-#      user_id=models.ForeignKey(User,on_delete=models.CASCADE)
-#      message=models.TextField()
-#      sent_time=models.DateTimeField()
-#      receive_time=models.DateTimeField()
 
-#      def __str__(self):
-#           return str(self.id)
 
-#class Transactions_for_support(Transactions)
-     #refund_status=models.CharField(max_length=50)
-     #raise_ticket=models.BooleanField()
+
+
+
+
+
+
+
+
+
+
+
+
+
+#from transactions.model import Transactions
+
+# Create your models here.
+
+
+
+
+
+
+# class Transactions_for_support(Transactions)
+#      refund_status=models.CharField(max_length=50)
+#      raise_ticket=models.BooleanField()

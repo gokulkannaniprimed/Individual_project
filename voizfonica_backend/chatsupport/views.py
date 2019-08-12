@@ -4,11 +4,11 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.core import serializers
-from .serializers import ProblemsSerializer,TicketSerializer
-from .models import Ticket,Problems
+from .serializers import ProblemsSerializer,TicketSerializer,ChatSerializer,MessagesSerializer
+from .models import Ticket,Problems,Chat,Messages
 import json
-#,Chat,Messages
-# ChatSerializer,MessagesSerializer,
+import datetime
+
 #from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -40,25 +40,74 @@ def ticket(request):
           #      ticket_serializer.save()
           # return JSONResponse(ticket_serializer.data,status=status.HTTP_201_CREATED)
           # return JSONResponse(ticket_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-      
+          this.messages_display=[
+               {
+                 sender_type:'user',
+                 message_content:'something',
+                 time_stamp:'11/08/19 11:17:27 am'
+               },
+               {
+                 sender_type:'bot',
+                 message_type:'information',
+                 message_content:'something',
+                 time_stamp:'11/08/19 11:17:27 am'
+               },
+               {
+                 sender_type:'bot',
+                 message_type:'option',
+                 message_content:'something',
+                 time_stamp:'11/08/19 11:17:27 am'
+               }
+             ];
 
 @csrf_exempt
 def problems(request):
      ProblemsBC=Problems.objects.all()
      ProblemsAC=ProblemsSerializer(ProblemsBC,many=True)
-     print(ProblemsAC)
+     print(ProblemsAC.data)
      return JSONResponse(ProblemsAC.data)
 
 #@login_required
-# def messages(request):
-#      MessagesBC=Messages.objects.all()
-#      MessagesAC=MessagesSerializer(MessagesBC,many=True)
-#      print(MessagesAC)
-#      return JSONResponse(MessagesAC.data)
+
+@csrf_exempt
+def messages(request):
+     if request.method=='GET':
+          MessagesBC=Messages.objects.all()
+          MessagesAC=MessagesSerializer(MessagesBC,many=True)
+          print(MessagesAC)
+          return JSONResponse(MessagesAC.data)
+
+     elif request.method=='POST':
+          j=json.loads(request.body)
+          print(j)
+          obj=Messages(chat_id=j["chat_id"],user_id=j["user_id"],sender_type=j["sender_type"],message_content=j["message_content"],message_type=j["message_type"],time_stamp=j["time_stamp"])
+          temp_str=j["message_content"]
+          obj.save()
+          if 'payment' in temp_str:
+               obj=obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please select from below options",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Payment failed",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Wrong deduction",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Wrong bill",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+               obj.save()
+          return JSONResponse("success")
 
 # @login_required
-# def chat(request):
-#      ChatBC=Chat.objects.all()
-#      ChatAC=ChatSerializer(ChatBC,many=True)
-#      print(ChatAC)
-#      return JSONResponse(ChatAC.data)
+
+@csrf_exempt
+def chat(request):
+     if request.method=='GET':
+          ChatBC=Chat.objects.all()
+          ChatAC=ChatSerializer(ChatBC,many=True)
+          #print(ChatAC.data)
+          print(JSONResponse(ChatAC.data))
+          return JSONResponse(ChatAC.data)
+
+     elif request.method=='POST':
+          j=json.loads(request.body)
+          print(j)
+          obj=Chat(user_id=j["user_id"],ip_address=j["ip_address"],start_time=j["start_time"])
+          obj.save()
+          return JSONResponse("success")
