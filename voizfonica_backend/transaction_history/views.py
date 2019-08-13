@@ -6,6 +6,10 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from .serializers import TransactionsSerializer
+import reportlab
+from reportlab.pdfgen import canvas
+import json
+
 
 class JSONResponse(HttpResponse):
     def __init__(self, data, **kwargs):
@@ -20,24 +24,26 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def getTransactions(request):
     if request.method == 'GET':
-
         #get all plans from db
         trans = Transactions.objects.all()
-
         #convert python model data into python premitive using serializer
         trans_serializer =  TransactionsSerializer(trans, many = True)
-
         #return
         return JSONResponse(trans_serializer.data)
 
     elif request.method == 'POST':
-        trans_data = JSONParser().parse(request)
-        trans_serializer = TransactionsSerializer(data=trans_data)
-        if Transactions_serializer.is_valid():
-            Transactions_serializer.save()
-            return JSONResponse(Transactions_serializer.data,status=status.HTTP_201_CREATED)
-        return JSONResponse(Transactions_serializer.data,status=status.HTTP_400_BAD_REQUEST)
+        j=json.loads(request.body)
+        print(j)
+        obj=Transactions(transaction_amount=j["transaction_amount"],transaction_date_time=j["transaction_date_time"],transaction_state=j["transaction_state"],payment_mode=j["payment_mode"],bank_name=j["bank_name"],wallet_linked=j["wallet_linked"],card_linked=j["card_linked"],refund_status=j['refund_status'],ticket_status=j['ticket_status'])
+        obj.save()
+        return JSONResponse("success")
 
+    elif request.method=='PUT':
+        j=json.loads(request.body)
+        print(j)
+        obj=Transactions(id=j['id'],transaction_amount=j["transaction_amount"],transaction_date_time=j["transaction_date_time"],transaction_state=j["transaction_state"],payment_mode=j["payment_mode"],bank_name=j["bank_name"],wallet_linked=j["wallet_linked"],card_linked=j["card_linked"],refund_status=j['refund_status'],ticket_status=j['ticket_status'])
+        obj.save()
+        return JSONResponse("success")
 
 
 

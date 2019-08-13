@@ -1,9 +1,5 @@
 from rest_framework import serializers
-from .models import Ticket,Problems,Chat,Messages
-class ProblemsSerializer(serializers.ModelSerializer):
-     class Meta:
-          model=Problems
-          fields=('__all__')
+from .models import Ticket,Chat,Messages
 
 class ChatSerializer(serializers.ModelSerializer):
      class Meta:

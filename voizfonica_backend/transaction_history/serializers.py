@@ -12,7 +12,8 @@ class TransactionsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Transactions
-        fields = ['transaction_amount','transaction_date_time','transaction_state',
-        # 'for_account',
-        'wallet_linked','card_linked']
+        fields="__all__"
+        # fields = ['transaction_amount','transaction_date_time','transaction_state',
+        # # 'for_account',
+        # 'wallet_linked','card_linked']
 

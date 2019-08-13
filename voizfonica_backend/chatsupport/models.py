@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from transaction_history.models import Transactions
 
 sender_type_choices=(
      ('user','USER'),
@@ -35,30 +36,18 @@ class Messages(models.Model):
      message_type=models.CharField(max_length=50,choices=message_type_choices,default='null')
      time_stamp=models.CharField(max_length=50)
 
-class Problems(models.Model):
-     problems=models.CharField(max_length=100)
-     solutions=models.CharField(max_length=100)
-     type=models.CharField(max_length=10, choices=prob_choices, default='option')
-
-     def __str__(self):
-          return (self.problems)+' / '+(self.solutions)
-
 class Ticket(models.Model):
-     #user=models.ForeignKey(User,on_delete=models.CASCADE)
      ticket_type=models.CharField(max_length=100)
      ticket_issue_date=models.CharField(max_length=100)
      ticket_resolution_proposed_date=models.CharField(max_length=100)
-     ticket_resolved_date=models.CharField(max_length=100)
-     ticket_resolution_response=models.CharField(max_length=100)
-     ticket_re_action_reason=models.CharField(max_length=100)
+     ticket_resolved_date=models.CharField(max_length=100,blank=True)
+     ticket_details=models.CharField(max_length=1000,blank=True)
+     ticket_resolution_response=models.CharField(max_length=100,blank=True)
+     ticket_re_action_reason=models.CharField(max_length=100,blank=True)
      ticket_status=models.CharField(max_length=50,choices=tick_choices, default='Open')
-     chat=models.CharField(max_length=100)
-     #transactions_linked=models.ForeignKey(Transactions,on_delete=models.CASCADE)
-     #accounts_linked=models.ForeignKey(Accounts,on_delete=models.CASCADE)
-     #chat_id=models.ForeignKey(Chat,on_delete=models.CASCADE)
+     transactions_linked=models.CharField(max_length=100,blank=True)
+     chat_id=models.CharField(max_length=100,blank=True)
 
-     def __str__(self):
-          return str(self.ticket_type)
 
 
 
