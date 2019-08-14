@@ -64,14 +64,28 @@ def messages(request):
           obj.save()
           
           if 'hi'in temp_str.lower():
-               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Hi",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Hi, I am voiza, your assistant for the day. How can I help you?",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Payment",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Fault",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="New connection",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="New ticket",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Action on existing tickets",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Other",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
                obj.save()
           
           if 'payment' in temp_str.lower():
                if 'failed' in temp_str.lower():
                     obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please select from below options",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
                     obj.save()
-                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Refund",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Raise a refund request",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+                    obj.save()
+                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Raise a ticket for transaction done",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
                     obj.save()
                else:
                     obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please select from below options",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
@@ -80,14 +94,78 @@ def messages(request):
                     obj.save()
                     obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Wrong deduction",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
                     obj.save()
-                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Wrong bill",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Multiple deduction",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+                    obj.save()
+                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Wrong invoice or no invoice",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
+                    obj.save()
+                    obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Payment not reflected",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))   
                     obj.save()
 
           if 'refund' in temp_str.lower():
-               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please raise a ticket from your transactions below, If there are existing tickets registered with the same transaction, please wait till it get sorted.",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please raise a refund request from your transactions below. If there is an existing request registered with the same transaction, please wait till it get sorted.",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
                obj.save()
                obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Your transactions",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
                obj.save()
+
+          if (('no' in temp_str.lower() and 'invoice' in temp_str.lower()) or ('wrong' in temp_str.lower() and 'invoice' in temp_str.lower())or ('raise' in temp_str.lower() and 'transaction' in temp_str.lower()) or ('wrong' in temp_str.lower() and 'deduction' in temp_str.lower()) or ('multiple' in temp_str.lower() and 'deduction' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please raise a ticket from your transactions below. If there is an existing ticket registered with the same transaction, please wait till it get sorted.",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Your transactions",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('new' in temp_str.lower() and 'connection' in temp_str.lower()) or ('new' in temp_str.lower() and 'sim' in temp_str.lower()) or ('new' in temp_str.lower() and 'dongle' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="You will be redirected to new connection page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new connection page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('existing' in temp_str.lower() and 'ticket' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Your tickets",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('new' in temp_str.lower() and 'ticket' in temp_str.lower()) or ('raise' in temp_str.lower() and 'new' in temp_str.lower() and 'ticket' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if('other' in temp_str.lower()):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please write to us in detail. We are there to help. You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('payment' in temp_str.lower() and 'not' in temp_str.lower() and 'reflected' in temp_str.lower())or ('payment' in temp_str.lower() and 'not' in temp_str.lower() and 'showing' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Not reflected in device",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Not reflected in transactions",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p")))
+               obj.save()
+
+          if (('device' in temp_str.lower()) and ('not' in temp_str.lower()) and ('reflected' in temp_str.lower())):
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Try rebooting the device. If it persists, please write to us in detail. We are there to help. You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('transactions' in temp_str.lower()) and ('not' in temp_str.lower()) and ('reflected' in temp_str.lower())):     
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Try refreshing the page. If it persists, please write to us in detail. We are there to help. You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               
+          if ('fault' in temp_str.lower()):     
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Try rebooting the device. If it persists, please write to us in detail. We are there to help. You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+          if (('wrong' in temp_str.lower() and 'bill' in temp_str.lower())or ('no' in temp_str.lower() and 'bill' in temp_str.lower())):     
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Please write to us in detail. We are there to help. You will be redirected to new tickets page",message_type="information",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+               obj=Messages(chat_id=j["chat_id"],user_id="",sender_type="bot",message_content="Ok, redirect me to new ticket page",message_type="option",time_stamp=str(datetime.datetime.now().strftime("%d-%m-%y %I:%M:%S %p"))) 
+               obj.save()
+
+     
  
      return JSONResponse("success")
 
